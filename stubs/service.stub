@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Repositories\{{ name }}Repository;
+
+class {{ class }} extends BaseService
+{
+    public function __construct(
+        {{ name }}Repository $repository
+    ){
+        $this->repository = $repository;
+    }
+
+}
