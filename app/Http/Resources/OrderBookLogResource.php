@@ -14,7 +14,12 @@ class OrderBookLogResource extends JsonResource
      */
     public function toArray($request)
     {
-        // TODO
-        return parent::toArray($request);
+        return [
+            'transaction' => $this->transaction,
+            'currencyPair' => $this->srcCurrency . ':' . $this->destCurrency,
+            'price' => $this->price,
+            'quantity' => $this->qty,
+            'total' => $this->total
+        ];
     }
 }

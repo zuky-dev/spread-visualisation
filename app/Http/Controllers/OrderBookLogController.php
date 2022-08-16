@@ -17,8 +17,8 @@ class OrderBookLogController extends Controller
     }
 
     public function index(OrderBookLogIndexRequest $request){
-        //TODO
-        $logs = collect([]);
-        return response()->json(OrderBookLogResource::collect($logs));
+        $logs = $this->service->latest($request->since);
+
+        return response()->json(OrderBookLogResource::collection($logs));
     }
 }

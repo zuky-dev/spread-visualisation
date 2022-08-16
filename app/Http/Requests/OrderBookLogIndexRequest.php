@@ -24,7 +24,7 @@ class OrderBookLogIndexRequest extends FormRequest
     public function rules()
     {
         return [
-            //TODO
+            'since' => 'nullable|date'
         ];
     }
 }
