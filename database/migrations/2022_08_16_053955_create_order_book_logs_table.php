@@ -15,11 +15,11 @@ return new class extends Migration
     {
         Schema::create('order_book_logs', function (Blueprint $table) {
             $table->id();
-            $table->string('source_currency');
-            $table->string('destination_currency');
-            $table->enum('transaction', ['BUY, SELL']);
+            $table->string('src_currency');
+            $table->string('dest_currency');
+            $table->enum('transaction', ['BUY', 'SELL']);
             $table->double('price');
-            $table->timestamp('time_at');
+            $table->double('qty')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });
