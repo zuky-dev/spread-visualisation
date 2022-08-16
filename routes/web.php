@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('orderbook', [ViewController::class, 'orderbook'])->name('orderbook.index');
+
+Route::get('{any?}', [ViewController::class, 'redirect'])
+    ->where('any', '.*');
