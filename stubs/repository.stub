@@ -4,7 +4,7 @@ namespace {{ namespace }};
 
 use App\Models\{{ name }};
 
-class {{ class }} extends BaseRepository
+class {{ class }}
 {
     public function __construct({{ name }} $model)
     {

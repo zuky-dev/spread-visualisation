@@ -4,7 +4,7 @@ namespace {{ namespace }};
 
 use App\Repositories\{{ name }}Repository;
 
-class {{ class }} extends BaseService
+class {{ class }}
 {
     public function __construct(
         {{ name }}Repository $repository
