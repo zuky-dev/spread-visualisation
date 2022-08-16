@@ -15,6 +15,8 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     use ModelTrait;
 
+    protected $guarded = ['id'];
+
     /**
      * The attributes that are mass assignable.
      *

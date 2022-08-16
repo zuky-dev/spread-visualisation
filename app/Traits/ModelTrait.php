@@ -12,7 +12,6 @@ trait ModelTrait
     use HasFactory;
     use SoftDeletes;
 
-    protected $guarded = ['id'];
     protected $json = [];
 
     /**
