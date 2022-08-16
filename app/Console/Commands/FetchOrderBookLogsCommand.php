@@ -5,7 +5,7 @@ namespace App\Console\Commands;
 use App\Services\OrderBookLogService;
 use Illuminate\Console\Command;
 
-class OrderBookCommand extends Command
+class FetchOrderBookLogsCommand extends Command
 {
     protected OrderBookLogService $orderBookLogService;
 
@@ -39,8 +39,27 @@ class OrderBookCommand extends Command
      */
     public function handle()
     {
-        $this->orderBookLogService->fetchAndSync($this->option('loop'));
+        $loop = $this->option('loop');
+
+        if ($loop) {
+            $sleepTime = (int) (env('CEXIO_API_LIMIT', dayInSeconds()) / dayInSeconds());
+
+            while (true) {
+                $this->fetch();
+
+                sleep($sleepTime);
+            }
+
+        } else {
+            $this->fetch();
+        }
 
         return Command::SUCCESS;
+    }
+
+    private function fetch(){
+        $this->orderBookLogService->fetchAndSync();
+
+        $this->info('Fetched orderbook from Cex.io (' . env('CEXIO_CURRENCY_1', 'ETH') . ':' . env('CEXIO_CURRENCY_2', 'EUR') . ') at ' . now()-> format('H:i:s d.m.Y'));
     }
 }
