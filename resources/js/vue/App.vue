@@ -1,10 +1,15 @@
 <template>
-    <div>
-        <lineChart :options="chartOptions" :chartData="chartData"/>
+    <div id="app" class="d-flex justify-content-center align-items-center row">
+        <lineChart class="col-8" :options="chartOptions" :chartData="chartData"/>
     </div>
 </template>
 
-<style lang="scss">
+<style lang="scss" scoped>
+    #app {
+        width: 100%;
+        height: 100vh;
+        background: #161616;
+    }
 </style>
 
 <script>
@@ -30,9 +35,16 @@
                             type: 'linear',
                             display: true,
                             position: 'left',
+                            grid: {
+                                color: '#2a2a2a',
+                                tickColor: '#2a2a2a'
+                            }
                         }
                     },
                     plugins: {
+                        legend: {
+                            display: false
+                        },
                         // Custom tooltip for showing advanced data
                         tooltip: {
                             callbacks: {

@@ -42,7 +42,7 @@ class FetchOrderBookLogsCommand extends Command
         $loop = $this->option('loop');
 
         if ($loop) {
-            $sleepTime = (int) (env('CEXIO_API_LIMIT', dayInSeconds()) / dayInSeconds());
+            $sleepTime = (int) (dayInSeconds() / env('CEXIO_API_LIMIT', (dayInSeconds() / 2)));
 
             while (true) {
                 $this->fetch();

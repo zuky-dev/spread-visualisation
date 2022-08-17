@@ -77,7 +77,14 @@ class OrderBookLogService
                 ]
             ]);
 
+
             $data = json_decode($response->getBody());
+
+            if (isset($data->error)) {
+                echo $data->error;
+                die();
+            }
+
             [$data->srcCurrency, $data->destCurrency] = $this->parseCurrencies($data->pair);
 
             return $data;

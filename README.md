@@ -21,7 +21,7 @@ Okrem základných premenných prostredia (napr.: na pripojenie k DB), sú dostu
 1. ```CEXIO_CURRENCY_1``` - Hodnota 1. meny (default ETH)
 2. ```CEXIO_CURRENCY_2``` - Hodnota 1. meny (default EUR)
 3. ```CEXIO_API_ORDERBOOK_LIMIT``` - Počet top výsledkov v orderbooku (default 100)
-4. ```CEXIO_API_LIMIT``` - Limitácia requestov na Cexio.io api (na deň, default 1x za sekundu)
+4. ```CEXIO_API_LIMIT``` - Limitácia requestov na Cexio.io api (na deň, default 1x za 2 sekundy)
 5. ```CEXIO_CURRENCY_TOO_LOW_CUTOFF``` - Limitácia pod akú cenu aplikácia nezoberie údaje (default 491,16 EUR, v prepočte cca 500 USD)
 6. ```CEXIO_API_TAKE_BEST``` - Limitácia koľko najlepších sa bude ukladať (default 5)
 

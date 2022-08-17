@@ -108,7 +108,8 @@ const store = createStore({
                     data: sells,
                     fill: false,
                     tension: 0.2,
-                    borderColor: sellsColors[i]
+                    borderColor: sellsColors[i],
+                    backgroundColor: sellsColors[i]
                 });
             }
 
@@ -128,7 +129,8 @@ const store = createStore({
                     data: buys,
                     fill: false,
                     tension: 0.2,
-                    borderColor: buysColors[i]
+                    borderColor: buysColors[i],
+                    backgroundColor: buysColors[i]
                 });
             }
 
