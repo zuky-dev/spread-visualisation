@@ -3,6 +3,7 @@
 namespace App\Repositories;
 
 use App\Models\OrderBookLog;
+use Carbon\Carbon;
 use Illuminate\Support\Collection;
 
 class OrderBookLogRepository
@@ -16,14 +17,14 @@ class OrderBookLogRepository
         $this->model = $model;
     }
 
-    public function getAll(string $since = null): Collection
+    public function getAll(Carbon $since = null): Collection
     {
         if(is_null($since)) {
             $since = now()->subSeconds(10);
         }
 
         return $this->model->where([
-            ['created_at', '>=', $since]
+            ['created_at', '>', $since]
         ])->get();
     }
 
@@ -50,7 +51,7 @@ class OrderBookLogRepository
         // price cutoff
         $smallestSellablePrice = env('CEXIO_CURRENCY_2_LOW_CUTOFF', 491.16);
         $transactions = $transactions->filter(function($item) use ($smallestSellablePrice) {
-            return $item[0] * $item[1] >= $smallestSellablePrice;
+            return $item[0] >= $smallestSellablePrice;
         });
 
         //take top values

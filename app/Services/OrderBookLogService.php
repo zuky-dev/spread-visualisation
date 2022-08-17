@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Repositories\OrderBookLogRepository;
 use App\Traits\LogTrait;
+use Carbon\Carbon;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Support\Collection;
@@ -29,7 +30,7 @@ class OrderBookLogService
     }
 
     public function latest(string $since = null): Collection {
-        return $this->repository->getAll($since);
+        return $this->repository->getAll(is_null($since) ? null : Carbon::parse($since));
     }
 
     public function truncateTable(){

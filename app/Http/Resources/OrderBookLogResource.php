@@ -19,7 +19,7 @@ class OrderBookLogResource extends JsonResource
             'currencyPair' => $this->srcCurrency . ':' . $this->destCurrency,
             'price' => $this->price,
             'quantity' => $this->qty,
-            'total' => $this->total
+            'perUnit' => $this->ppu
         ];
     }
 }
