@@ -63,8 +63,8 @@ class OrderBookLogService
      */
     private function cexioFetch (): object
     {
-        $currency1 = env('CEXIO_CURRENCY_1', 'ETH');
-        $currency2 = env('CEXIO_CURRENCY_2', 'EUR');
+        $currency1 = env('VITE_CEXIO_CURRENCY_1', 'ETH');
+        $currency2 = env('VITE_CEXIO_CURRENCY_2', 'EUR');
 
         $endpoint = $this->cexioApi . 'order_book/' . $currency1 . '/' . $currency2;
 

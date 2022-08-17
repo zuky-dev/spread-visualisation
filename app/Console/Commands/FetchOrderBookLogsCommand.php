@@ -61,6 +61,6 @@ class FetchOrderBookLogsCommand extends Command
     private function fetch(){
         $this->orderBookLogService->fetchAndSync();
 
-        $this->info('Fetched orderbook from Cex.io (' . env('CEXIO_CURRENCY_1', 'ETH') . ':' . env('CEXIO_CURRENCY_2', 'EUR') . ') at ' . now()-> format('H:i:s d.m.Y'));
+        $this->info('Fetched orderbook from Cex.io (' . env('VITE_CEXIO_CURRENCY_1', 'ETH') . ':' . env('VITE_CEXIO_CURRENCY_2', 'EUR') . ') at ' . now()-> format('H:i:s d.m.Y'));
     }
 }

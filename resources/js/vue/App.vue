@@ -1,6 +1,9 @@
 <template>
-    <div id="app" class="d-flex justify-content-center align-items-center row">
+    <div id="app" class="m-0 d-flex flex-column justify-content-center align-items-center">
+        <span class="col-8 py-1 px-3 mb-4" id="buy">Bidding</span>
         <lineChart class="col-8" :options="chartOptions" :chartData="chartData"/>
+        <span class="col-8 py-1 px-3 mt-4" id="sell">Selling</span>
+        <h1 id="currencies" class="p-3">{{ currency1 }} : {{ currency2 }}</h1>
     </div>
 </template>
 
@@ -9,6 +12,29 @@
         width: 100%;
         height: 100vh;
         background: #161616;
+        position: relative;
+
+        #currencies {
+            position: absolute;
+            width: initial;
+            bottom: 0;
+            right: 0;
+        }
+
+        #buy{
+            background: linear-gradient(-90deg, #20B2AB, #1AA3A6, #1395A1, #0D869D, #067898);
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 1.3em;
+        }
+
+        #sell{
+            background: linear-gradient(90deg, #FF8B01, #FA6F01, #F55301, #F03801, #EB1C01);
+            text-align: right;
+            text-transform: uppercase;
+            font-weight: 800;
+            font-size: 1.3em;
+        }
     }
 </style>
 
@@ -25,6 +51,8 @@
         },
         data () {
             return {
+                currency1: import.meta.env.VITE_CEXIO_CURRENCY_1,
+                currency2: import.meta.env.VITE_CEXIO_CURRENCY_2,
                 chartOptions: {
                     parsing: {
                         xAxisKey: 'date',
