@@ -94,13 +94,27 @@ class OrderBookLogRepository
     {
         $transactions = collect($transactions);
 
-        // price cutoff
+        // Price cutoff
         $smallestSellablePrice = env('CEXIO_CURRENCY_TOO_LOW_CUTOFF', 491.16);
         $transactions = $transactions->filter(function($item) use ($smallestSellablePrice) {
             return $item[0] >= $smallestSellablePrice;
         });
 
-        // take top values
+        // Take top values
+        if ($type == 'BUY') {
+            // I wanna sell for the highest possible price to the bidders (buyers)
+            $transactions = $transactions->sortByDesc(function($item) {
+                return $item[0] / $item[1];
+            });
+        }
+
+        if ($type == 'SELL') {
+            // I wanna buy for the lowerst possible price from the askers (sellers)
+            $transactions = $transactions->sortBy(function($item) {
+                return $item[0] / $item[1];
+            });
+        }
+
         $countTopValues = env('CEXIO_API_TAKE_BEST', 5);
         $transactions = $transactions->take($countTopValues);
 
