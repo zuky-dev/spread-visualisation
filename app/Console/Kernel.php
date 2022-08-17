@@ -15,6 +15,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        // TODO: ideally would have it go once every few seconds
         $schedule->command('orderbook:fetch')->everyMinute();
     }
 

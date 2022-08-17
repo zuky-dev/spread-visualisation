@@ -8,6 +8,7 @@ class OrderBookLogCollection extends ResourceCollection
 {
     /**
      * Transform the resource collection into an array.
+     * Collection will be divided by date and by type of transaction
      *
      * @param  \Illuminate\Http\Request  $request
      * @return array|\Illuminate\Contracts\Support\Arrayable|\JsonSerializable

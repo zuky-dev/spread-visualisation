@@ -47,6 +47,7 @@ class FetchOrderBookLogsCommand extends Command
             while (true) {
                 $this->fetch();
 
+                //TODO: this sleep should be changed to something less server taxing
                 sleep($sleepTime);
             }
 

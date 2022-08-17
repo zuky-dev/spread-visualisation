@@ -56,3 +56,4 @@ Fe členenie je jednoduché (Vue má zakomponované MVC praktiky). Je pridané i
 5. Upraviť dotazovanie sa z frontendu na lokálne API, aby sa server nepreťažil, poprípade úplne odstrániť setInterval (aj keď je na Promise, takže nemá taký dopad na efektivitu) a používať napr. websockety a bradcastom rozosielať nové údaje
 6. Úprava grafickej strany FE
 7. Odstánenie nepotrebých častí aplikácie (napr. keď sa nebude rozmýšlať nad prihlasovaním, tak tabuľka userov a default auth sú nepotrebné)
+8. Na api strane by som spravil generator farieb aby nemuselo byt nutne max top 5 vysledkov (takto da ostatne sive)

@@ -17,9 +17,15 @@ class OrderBookLogRepository
         $this->model = $model;
     }
 
-    public function getAll(Carbon $since = null): Collection
+    /**
+     * Gets either entries from last 10 seconds or all since $since variable
+     *
+     * @param Carbon|null $since
+     * @return Collection
+     */
+    public function getLatest (Carbon $since = null): Collection
     {
-        if(is_null($since)) {
+        if (is_null($since)) {
             $since = now()->subSeconds(10);
         }
 
@@ -28,23 +34,63 @@ class OrderBookLogRepository
         ])->get();
     }
 
-    public function syncFromData(array $sells, array $buys, string $srcCurrency, string $destCurrency) {
+    /**
+     * Syncs buys and sells entries separately
+     * Its easier to distinguish, and simplifies logic
+     *
+     * @param array $sells
+     * @param array $buys
+     * @param string $srcCurrency
+     * @param string $destCurrency
+     * @return void
+     */
+    public function syncFromData (array $sells, array $buys, string $srcCurrency, string $destCurrency): void
+    {
         $this->syncTransaction($sells, 'SELL', $srcCurrency, $destCurrency);
         $this->syncTransaction($buys, 'BUY', $srcCurrency, $destCurrency);
     }
 
-    public function truncate() {
+    /**
+     * Truncates OrderBookLog model
+     *
+     * @return void
+     */
+    public function truncate (): void
+    {
         $this->model->truncate();
     }
 
-    private function syncTransaction(array $transactions, string $type, string $srcCurrency, string $destCurrency)
+    /**
+     * Adds entries to database
+     * Usert alows multi-create with having created_at variable
+     * Cex.io provides timestamp, thought its 99% identical to now()
+     * TODO: In mission critical usecases tould that be used, now as a prototype its not really necessary
+     *
+     * @param array $transactions
+     * @param string $type
+     * @param string $srcCurrency
+     * @param string $destCurrency
+     * @return void
+     */
+    private function syncTransaction (array $transactions, string $type, string $srcCurrency, string $destCurrency): void
     {
         $parsedTransactions = $this->parseTransactions($transactions, $type, $srcCurrency, $destCurrency);
 
         $this->model->upsert($parsedTransactions->toArray(), []);
     }
 
-    private function parseTransactions(array $transactions, string $type, string $srcCurrency, string $destCurrency): Collection
+    /**
+     * Filters transactions based on price and value
+     * Parses into understandablke for DB array
+     * TODO: Under normal circumstance logic would be separated into smaller functions (one for filtering, one for price cut etc.). But due to the smallnes of the method i believe its not necessary for a prototype
+     *
+     * @param array $transactions
+     * @param string $type
+     * @param string $srcCurrency
+     * @param string $destCurrency
+     * @return Collection
+     */
+    private function parseTransactions (array $transactions, string $type, string $srcCurrency, string $destCurrency): Collection
     {
         $transactions = collect($transactions);
 
@@ -54,7 +100,7 @@ class OrderBookLogRepository
             return $item[0] >= $smallestSellablePrice;
         });
 
-        //take top values
+        // take top values
         $countTopValues = env('CEXIO_API_TAKE_BEST', 5);
         $transactions = $transactions->take($countTopValues);
 

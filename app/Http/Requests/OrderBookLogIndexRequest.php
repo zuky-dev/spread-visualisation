@@ -18,6 +18,7 @@ class OrderBookLogIndexRequest extends FormRequest
 
     /**
      * Get the validation rules that apply to the request.
+     * We either want a date or null (so either sync since a date or last 10 seconds)
      *
      * @return array<string, mixed>
      */

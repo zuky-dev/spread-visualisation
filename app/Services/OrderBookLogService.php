@@ -23,21 +23,46 @@ class OrderBookLogService
         $this->repository = $repository;
     }
 
-    public function fetchAndSync() {
+    /**
+     * Fetch Cex.io api and save data
+     *
+     * @return void
+     */
+    public function fetchAndSync (): void
+    {
         $data = $this->cexioFetch();
 
         $this->repository->syncFromData($data->bids, $data->asks, $data->srcCurrency, $data->destCurrency);
     }
 
-    public function latest(string $since = null): Collection {
-        return $this->repository->getAll(is_null($since) ? null : Carbon::parse($since));
+    /**
+     * Returns latest entries
+     *
+     * @param string|null $since
+     * @return Collection
+     */
+    public function latest (string $since = null): Collection
+    {
+        return $this->repository->getLatest(is_null($since) ? null : Carbon::parse($since));
     }
 
-    public function truncateTable(){
+    /**
+     * Truncates repository model
+     *
+     * @return void
+     */
+    public function truncateTable (): void
+    {
         $this->repository->truncate();
     }
 
-    private function cexioFetch() {
+    /**
+     * Tries to fetch data from Cex.io
+     *
+     * @return object
+     */
+    private function cexioFetch (): object
+    {
         $currency1 = env('CEXIO_CURRENCY_1', 'ETH');
         $currency2 = env('CEXIO_CURRENCY_2', 'EUR');
 
@@ -57,13 +82,24 @@ class OrderBookLogService
 
             return $data;
         } catch (ClientException $exception) {
+
+            /**
+             * if local enviroment, just DDs exception
+             * on production saves exception to db for easier develop view
+             */
             $this->logger('high', $exception);
 
             die();
         }
     }
 
-    private function parseCurrencies(string $pair): array
+    /**
+     * Parse pair into separate currencies
+     *
+     * @param string $pair
+     * @return array
+     */
+    private function parseCurrencies (string $pair): array
     {
         return explode(':', $pair, 2);
     }

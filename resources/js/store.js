@@ -4,11 +4,15 @@ const MAX_GRAPH_POINTS = 15;
 const API_URL = '/api';
 
 const store = createStore({
+    // What states are being tracked
     state: {
         dates: [],
         buys: [],
         sells: [],
     },
+
+    // What happens on commiting to said data
+    // TODO: Ideally would make a wrapper function for buys and sells as they have the exact same functionality
     mutations: {
         dates(state, value){
             state.dates.push(value);
@@ -54,11 +58,15 @@ const store = createStore({
             }
         }
     },
+
+    // Active interaction with data
     actions: {
         fetchData: (state, interval = 5000) => {
-            let inter = setInterval(() => {updateData(state)}, interval);
+            setInterval(() => {updateData(state)}, interval);
         }
     },
+
+    // Watching data
     getters: {
         lastDate: state => {
             let since = null;
@@ -69,6 +77,7 @@ const store = createStore({
 
             return since;
         },
+        // Building structure for chartjs
         chartData: state => {
             let sellsColors = ['#FF8B01', '#FA6F01', '#F55301', '#F03801', '#EB1C01'];
             let buysColors = ['#20B2AB', '#1AA3A6', '#1395A1', '#0D869D', '#067898'];
@@ -82,6 +91,7 @@ const store = createStore({
                 obj.labels.push(state.dates[i]);
             }
 
+            // TODO: Ideally would make a wrapper function for buys and sells as they have the exact same functionality
             for (let i = 0; i < state.sells.length; i++) {
                 let sells = [];
                 state.sells[i].forEach(element => {
@@ -127,6 +137,7 @@ const store = createStore({
     }
 });
 
+// Call to local api
 function updateData (state) {
     let since = state.getters.lastDate;
 

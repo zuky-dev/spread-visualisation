@@ -33,6 +33,7 @@
                         }
                     },
                     plugins: {
+                        // Custom tooltip for showing advanced data
                         tooltip: {
                             callbacks: {
                                 title: function(context) {
