@@ -49,7 +49,7 @@ class OrderBookLogRepository
         $transactions = collect($transactions);
 
         // price cutoff
-        $smallestSellablePrice = env('CEXIO_CURRENCY_2_LOW_CUTOFF', 491.16);
+        $smallestSellablePrice = env('CEXIO_CURRENCY_TOO_LOW_CUTOFF', 491.16);
         $transactions = $transactions->filter(function($item) use ($smallestSellablePrice) {
             return $item[0] >= $smallestSellablePrice;
         });
