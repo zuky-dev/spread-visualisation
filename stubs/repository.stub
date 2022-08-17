@@ -1,0 +1,13 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Models\{{ name }};
+
+class {{ class }}
+{
+    public function __construct({{ name }} $model)
+    {
+        $this->model = $model;
+    }
+}
